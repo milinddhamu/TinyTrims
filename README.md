@@ -25,6 +25,7 @@ Follow these steps to set up and run the project locally:
     NEXT_PUBLIC_GOOGLE_CLIENT_ID=<your-google-client-id>
     NEXT_PUBLIC_GOOGLE_CLIENT_SECRET=<your-google-client-secret>
     MONGODB_URI=<your-mongodb-uri>
+    NEXTAUTH_SECRET=use "openssl rand -base64 32" or [generate here](https://generate-secret.vercel.app/32)
     ```
 
     Replace `<your-google-client-id>`, `<your-google-client-secret>`, and `<your-mongodb-uri>` with your actual Google API credentials and MongoDB connection details.
