@@ -30,14 +30,13 @@ import {useRouter} from 'next/navigation'
 
 
 export function CollapsibleDemo({domain}) {
-  const router = useRouter()
+  const router = useRouter();
   const [isOpen, setIsOpen] = React.useState(false);
   const linksArray = [...domain.links];
   const firstLink = linksArray.shift();
   const handleVisitLink = (link) => router.push(`/${encodeURIComponent(link)}`)
   return (
     <Card className="w-full p-2 rounded-[.5em]">
-
     <Collapsible
       open={isOpen}
       onOpenChange={setIsOpen}
@@ -47,7 +46,7 @@ export function CollapsibleDemo({domain}) {
         <h4 className="text-sm font-semibold">
           {domain.destination}
         </h4>
-        {true && <CollapsibleTrigger asChild>
+        {(domain.links.length > 1) && <CollapsibleTrigger asChild>
           <Button variant="ghost" size="sm">
             {/* <Pencil1Icon className="h-4 w-4" /> */}
             <CaretSortIcon className="h-4 w-4" />
