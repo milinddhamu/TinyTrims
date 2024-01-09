@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# URL Shortener Project 🚀
 
-## Getting Started
+Welcome to **LinkSwift**, an advanced URL shortener project built with Next.js, MongoDB, NextAuth, and Shadcn UI. 🌐 This project allows you to swiftly and securely shorten URLs, providing a sleek and intuitive user interface.
 
-First, run the development server:
+## Getting Started 🚀
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Follow these steps to set up and run the project locally:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. **Clone the repository:**
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+    ```bash
+    git clone <repository-url>
+    cd url-shortener
+    ```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+2. **Install dependencies:**
 
-## Learn More
+    ```bash
+    npm install
+    ```
 
-To learn more about Next.js, take a look at the following resources:
+3. **Create a `.env.local` file in the root of the project** and add the following environment variables:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+    ```env
+    NEXT_PUBLIC_GOOGLE_CLIENT_ID=<your-google-client-id>
+    NEXT_PUBLIC_GOOGLE_CLIENT_SECRET=<your-google-client-secret>
+    MONGODB_URI=<your-mongodb-uri>
+    ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+    Replace `<your-google-client-id>`, `<your-google-client-secret>`, and `<your-mongodb-uri>` with your actual Google API credentials and MongoDB connection details.
 
-## Deploy on Vercel
+4. **Run the development server:**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    ```bash
+    npm run dev
+    ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+    Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## Scripts 📜
+
+- `npm run dev`: Run the development server.
+- `npm run build`: Build the project for production.
+- `npm start`: Start the production server.
+- `npm run lint`: Run ESLint for code linting.
+
+## Dependencies 📦
+
+This project utilizes various libraries and packages, including (but not limited to):
+
+- [Next.js](https://nextjs.org/)
+- [NextAuth](https://next-auth.js.org/)
+- [MongoDB](https://www.mongodb.com/)
+- [Shadcn UI](https://shadcn-ui.com/)
+
+For a complete list, refer to the `dependencies` section in the `package.json` file.
+
+## Contributing 🤝
+
+Feel free to contribute to the project by opening issues or creating pull requests. Your feedback and contributions are highly appreciated!
+
+## License 📄
+
+This project is licensed under the [MIT License](LICENSE).
+
+Happy URL shortening with **LinkSwift**! 🚀
