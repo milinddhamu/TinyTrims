@@ -95,9 +95,13 @@ export default function Home() {
   
     fetchData();
   }, [session]);
+  const reverseMappedLinks = [...(userData?.domains || [])].reverse();
+
+  console.log(reverseMappedLinks)
   return (
-    <div className="flex flex-col h-screen justify-center w-full items-center">
-    <div className="flex flex-col gap-2 items-start w-full max-w-xl px-4">
+    <div className="flex flex-col h-full justify-start w-full items-center p-4">
+      <div className="flex w-full h-48"></div>
+    <div className="flex flex-col gap-2 items-start w-full max-w-xl">
       <div className="flex flex-row gap-2 items-center">
       <ModeToggle />
       {(session && session.user) ? 
@@ -137,7 +141,7 @@ export default function Home() {
       {userData && 
         <>
           <Separator className="my-1" />
-            {userData?.domains.map((domain,index)=>(
+            {reverseMappedLinks.map((domain,index)=>(
               <CollapsibleDemo domain={domain} key={`${domain.destination}-${index}`} />
             ))}
         </>
