@@ -3,7 +3,7 @@ import { notFound, redirect } from "next/navigation";
 async function getLinkData({ shortid }) {
   try {
     const options = { method: 'GET' };
-    const response = await fetch(`/api/links/${encodeURIComponent(shortid)}`, options);
+    const response = await fetch(`https://tinytrims.vercel.app/api/links/${encodeURIComponent(shortid)}`, options);
     const data = await response.json();
     return data;
   } catch (error) {
