@@ -1,6 +1,6 @@
-# URL Shortener Project 🚀
+# TinyTrims🚀
 
-Welcome to **LinkSwift**, an advanced URL shortener project built with Next.js, MongoDB, NextAuth, and Shadcn UI. 🌐 This project allows you to swiftly and securely shorten URLs, providing a sleek and intuitive user interface.
+Welcome to **TinyTrims**, an advanced URL shortener project built with Next.js, MongoDB, NextAuth, and Shadcn UI. 🌐 This project allows you to swiftly and securely shorten URLs, providing a sleek and intuitive user interface.
 
 ## Getting Started 🚀
 
@@ -10,7 +10,7 @@ Follow these steps to set up and run the project locally:
 
     ```bash
     git clone <repository-url>
-    cd url-shortener
+    cd TinyTrims
     ```
 
 2. **Install dependencies:**
