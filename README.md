@@ -29,7 +29,8 @@ Follow these steps to set up and run the project locally:
     ```
     
     Replace `<your-google-client-id>`, `<your-google-client-secret>`, and `<your-mongodb-uri>` with your actual Google API credentials and MongoDB connection details.
-    NEXTAUTH_SECRET is required for production only. [Generate it here](https://generate-secret.vercel.app/32)
+   
+    `NEXTAUTH_SECRET` is required for production only. [Generate it here](https://generate-secret.vercel.app/32)
 
 5. **Run the development server:**
 
