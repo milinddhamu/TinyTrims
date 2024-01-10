@@ -46,7 +46,7 @@ export function CollapsibleDemo({domain}) {
         <h4 className="text-sm font-semibold">
           {domain.destination}
         </h4>
-        {(domain.links.length > 1) && <CollapsibleTrigger asChild>
+        {(domain?.links.length > 1) && <CollapsibleTrigger asChild>
           <Button variant="ghost" size="sm">
             {/* <Pencil1Icon className="h-4 w-4" /> */}
             <CaretSortIcon className="h-4 w-4" />
@@ -56,8 +56,8 @@ export function CollapsibleDemo({domain}) {
       </div>
 
       <div className="rounded-md border pl-4 font-mono text-sm shadow-sm flex flex-row justify-between items-center">
-          <div>
-        {firstLink.id}
+          <div className={`${firstLink?.id ? "":"text-red-500"}`}>
+        {firstLink?.id || "All links expired"}
         </div>
           <div className="flex flex-row items-center gap-2">
           <TooltipProvider>
@@ -68,7 +68,7 @@ export function CollapsibleDemo({domain}) {
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
-          {firstLink.views.length}
+          {firstLink?.views.length}
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
@@ -90,19 +90,19 @@ export function CollapsibleDemo({domain}) {
             </Tooltip>
           </TooltipProvider>
                         
-          <Button variant="ghost" size="xs" onClick={() => handleVisitLink(firstLink.id)} className="m-1 p-1.5">
+         {firstLink && <Button variant="ghost" size="xs" onClick={() => handleVisitLink(firstLink.id)} className="m-1 p-1.5">
           {/* <TrashIcon className="h-4 w-4 text-red-500" /> */}
             <ArrowTopRightIcon className="h-4 w-4" />
-        </Button>
+        </Button> }
         </div>
         </div>
       
-
+      {linksArray && 
       <CollapsibleContent className="space-y-2">
-          {linksArray.map((link,index)=>(
-        <div key={`${link.id}-${index}`} className="rounded-md border pl-4 font-mono text-sm shadow-sm flex flex-row justify-between items-center">
+          {linksArray?.map((link,index)=>(
+        <div key={`${link.id}-${index}`} className={`rounded-md border pl-4 font-mono text-sm shadow-sm flex flex-row justify-between items-center ${link?.id ? "":"text-red-500"}`}>
           <div>
-        {link.id}
+        {link?.id || "Link expired"}
         </div>
           <div className="flex flex-row items-center gap-2">
           <TooltipProvider>
@@ -113,7 +113,7 @@ export function CollapsibleDemo({domain}) {
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
-          {link.views.length}
+          {link?.views.length}
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
@@ -135,15 +135,15 @@ export function CollapsibleDemo({domain}) {
             </Tooltip>
           </TooltipProvider>
                         
-          <Button variant="ghost" size="xs" onClick={() => handleVisitLink(link.id)} className="m-1 p-1.5">
+          {link && <Button variant="ghost" size="xs" onClick={() => handleVisitLink(link.id)} className="m-1 p-1.5">
           {/* <TrashIcon className="h-4 w-4 text-red-500" /> */}
             {/* <CopyIcon className="h-4 w-4" /> */}
             <ArrowTopRightIcon className="h-4 w-4" />
-        </Button>
+        </Button> }
         </div>
         </div>
          ))}
-      </CollapsibleContent>
+      </CollapsibleContent> }
     </Collapsible>
     </Card>
 

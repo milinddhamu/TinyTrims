@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { nanoid } from 'nanoid';
 
-export default function handleStoreUserData({ session, destinationLinkInput }) {
+export default function handleStoreUserData({ session, destinationLinkInput,metaDataState }) {
   const currentDate = new Date();
   const timestamp = currentDate.getTime();
   const uniqueTag = nanoid(8);
@@ -15,6 +15,9 @@ export default function handleStoreUserData({ session, destinationLinkInput }) {
       views: [],
       destination: destinationLinkInput,
       timestamp: timestamp,
+      title:metaDataState.title,
+      description:metaDataState.description,
+      image:metaDataState.opengraphImageLink
     }]
   };
 
@@ -28,7 +31,13 @@ export default function handleStoreUserData({ session, destinationLinkInput }) {
   };
 
   const linkData = {
-    id: nanoid(6), views: [], timestamp ,destination: destinationLinkInput
+    id: nanoid(6), 
+    views: [], 
+    timestamp ,
+    destination: destinationLinkInput, 
+    title:metaDataState.title,
+    description:metaDataState.description,
+    image:metaDataState.opengraphImageLink
   }
 
   // Extract email from userData
@@ -42,11 +51,9 @@ export default function handleStoreUserData({ session, destinationLinkInput }) {
         const existingDomain = existingUser.domains.find(domain => domain.destination === destinationLinkInput);
 
         if (existingDomain) {
-          const newLink = linkData;
-
           axios.put(`/api/users/${encodedEmail}`, {
             domainId: existingDomain._id,
-            link: newLink
+            link: linkData
           })
             .then(putResponse => {
               console.log('Links array updated successfully:', putResponse.data);
