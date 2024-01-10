@@ -3,7 +3,7 @@ import axios from 'axios';
 
 async function getLinkData({ shortid }) {
   try {
-    const response = await axios.get(`/api/links/${encodeURIComponent(shortid)}`);
+    const response = await axios.get(`https://tinytrims.vercel.app/api/links/${encodeURIComponent(shortid)}`);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -14,7 +14,7 @@ async function getLinkData({ shortid }) {
 export async function generateMetadata({ params, searchParams }, parent) {
   // read route params
   const shortid = params.shortid
-  const response = await axios.get(`/api/links/${encodeURIComponent(shortid)}`);
+  const response = await axios.get(`https://tinytrims.vercel.app/api/links/${encodeURIComponent(shortid)}`);
   const data = response.data;
   const matchedData = data?.links.find(entry => entry !== null);
  
