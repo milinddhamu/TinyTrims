@@ -32,11 +32,19 @@ import handleStoreUserData from '@/controllers/user';
 import { useToast } from "@/components/ui/use-toast"
 import axios from 'axios';
 
+const initialMetaDataState = {
+  title: '',
+  description: '',
+  opengraphImageLink: '',
+};
+
 export default function Home() {
   const { toast } = useToast();
   const [toggleAdvancedSettings,setToggleAdvancedSettings] = useState(false);
   const { data : session } = useSession();
   const [destinationLinkInput , setDestinationLinkInput] = useState('');
+  const [metaDataState, setMetaDataState] = useState(initialMetaDataState);
+
   const [userData , setUserData] = useState(null);
   const domainRegex = /^(?!:\/\/)([a-zA-Z0-9-]{1,63}\.?){1,}([a-zA-Z]{2,})$/;
   const handleDestinationLinkInput = (e) => {
@@ -66,12 +74,13 @@ export default function Home() {
         })
       } else {
         if(session && session.user){
-          await handleStoreUserData({session ,destinationLinkInput });
+          await handleStoreUserData({session ,destinationLinkInput,metaDataState });
           toast({
             title: `Generated a shortId for ${destinationLinkInput}`,
           });
           await delay(1000);
           await fetchUserData(session.user.email);
+          setDestinationLinkInput('')
           
         } else {
           toast({
@@ -96,6 +105,15 @@ export default function Home() {
     fetchData();
   }, [session]);
   const reverseMappedLinks = [...(userData?.domains || [])].reverse();
+
+  const handleMetaDataChange = (e) => {
+    const { name, value } = e.target;
+    setMetaDataState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
 
   console.log(reverseMappedLinks)
   return (
@@ -135,8 +153,11 @@ export default function Home() {
           value={destinationLinkInput} 
           onChange={handleDestinationLinkInput} />
         </div>
-        <PopoverDemo />
-        <Button onClick={handleFormSubmit}>Shorten</Button>
+            <PopoverDemo
+              metaDataState={metaDataState}
+              handleMetaDataChange={handleMetaDataChange}
+            />  
+                <Button onClick={handleFormSubmit}>Shorten</Button>
       </div>
       {userData && 
         <>

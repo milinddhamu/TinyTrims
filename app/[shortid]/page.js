@@ -1,23 +1,40 @@
 import { notFound, redirect } from "next/navigation";
+import axios from 'axios';
 
 async function getLinkData({ shortid }) {
   try {
-    const options = { method: 'GET' };
-    const response = await fetch(`https://tinytrims.vercel.app/api/links/${encodeURIComponent(shortid)}`, options);
-    const data = await response.json();
-    return data;
+    const response = await axios.get(`/api/links/${encodeURIComponent(shortid)}`);
+    return response.data;
   } catch (error) {
     console.error(error);
     throw error;
   }
 }
 
+export async function generateMetadata({ params, searchParams }, parent) {
+  // read route params
+  const shortid = params.shortid
+  const response = await axios.get(`/api/links/${encodeURIComponent(shortid)}`);
+  const data = response.data;
+  const matchedData = data?.links.find(entry => entry !== null);
+ 
+  return {
+    title: matchedData.title,
+    description: matchedData.description,
+    openGraph: {
+      images: [{  url: matchedData.image, 
+                  width:1200,
+                  height:630 }],
+    },
+  }
+}
+
 export default async function Page({ params }) {
     const shortid = params.shortid;
     const res = await getLinkData({ shortid });
-    const nonNullLink = res?.link.find(entry => entry !== null);
-    if (nonNullLink) {
-      const destination = nonNullLink.destination;
+    const matchedLinkData = res?.links.find(entry => entry !== null);
+    if (matchedLinkData) {
+      const destination = matchedLinkData.destination;
       if (destination) {
           return redirect(destination);
       } else {

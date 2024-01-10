@@ -7,55 +7,55 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { GearIcon } from "@radix-ui/react-icons"
+import { Textarea } from "@/components/ui/textarea"
+export function PopoverDemo({
+      metaDataState,
+      handleMetaDataChange,
 
-export function PopoverDemo() {
+}) {
   return (
     <Popover>
       <PopoverTrigger asChild>
         <Button variant="outline" className="px-[.75em]"><GearIcon className="h-4 w-4" /></Button>
       </PopoverTrigger>
       <PopoverContent className="w-80">
-        <div className="grid gap-4">
-          <div className="space-y-2">
-            <h4 className="font-medium leading-none">Dimensions</h4>
-            <p className="text-sm text-muted-foreground">
-              Set the dimensions for the layer.
-            </p>
+        <div className="flex flex-col justify-start w-full gap-3">
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="meta-title">Meta data: Title</Label>
+              <Input 
+                value={metaDataState.title} 
+                onChange={handleMetaDataChange}
+                type="text"
+                name="title" 
+                id="meta-title" 
+                placeholder="Meta Title"
+              />
           </div>
-          <div className="grid gap-2">
-            <div className="grid grid-cols-3 items-center gap-4">
-              <Label htmlFor="width">Width</Label>
-              <Input
-                id="width"
-                defaultValue="100%"
-                className="col-span-2 h-8"
+          
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="meta-description">Meta data: Description</Label>
+              <Textarea 
+                value={metaDataState.description}                
+                onChange={handleMetaDataChange}
+                type="text"
+                name="description"
+                id="meta-description" 
+                placeholder="Meta Description"
               />
-            </div>
-            <div className="grid grid-cols-3 items-center gap-4">
-              <Label htmlFor="maxWidth">Max. width</Label>
-              <Input
-                id="maxWidth"
-                defaultValue="300px"
-                className="col-span-2 h-8"
-              />
-            </div>
-            <div className="grid grid-cols-3 items-center gap-4">
-              <Label htmlFor="height">Height</Label>
-              <Input
-                id="height"
-                defaultValue="25px"
-                className="col-span-2 h-8"
-              />
-            </div>
-            <div className="grid grid-cols-3 items-center gap-4">
-              <Label htmlFor="maxHeight">Max. height</Label>
-              <Input
-                id="maxHeight"
-                defaultValue="none"
-                className="col-span-2 h-8"
-              />
-            </div>
           </div>
+
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="opengraph-image">Meta data: Opengraph Image</Label>
+              <Input 
+                type="text"
+                name="opengraphImageLink"
+                value={metaDataState.opengraphImageLink}
+                onChange={handleMetaDataChange}
+                placeholder="Opengraph Image Link"
+                id="opengraph-image" 
+              />
+          </div>
+
         </div>
       </PopoverContent>
     </Popover>

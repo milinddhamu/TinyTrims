@@ -2,8 +2,13 @@ import connectMongoDb from "@/lib/mongodb";
 import UserModel from "@/models/UserModel";
 import { NextResponse } from "next/server";
 import { ObjectId } from 'mongodb';
+import { auth } from "@/auth";
 
-export async function PUT(request, { params }) {
+export const PUT = auth(async(request, { params }) => {
+  if(!request.auth){
+    return NextResponse.json({error: "Please SignIn to continue"}, { status: 400 });
+  };
+
   const { email } = params;
   const requestData = await request.json();
 
@@ -52,13 +57,16 @@ export async function PUT(request, { params }) {
     console.error('Error updating data:', error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
-}
+})
 
 
 
-export async function GET(request, { params,query }) {
+export const GET = auth(async (request, { params }) => {
+  if (!request.auth) {
+    return NextResponse.json({ error: "Please sign in to continue" }, { status: 400 });
+  }
   const { email } = params;
   await connectMongoDb();
   const user = await UserModel.findOne({ email });
   return NextResponse.json({ user }, { status: 200 });
-}
+})
