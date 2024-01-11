@@ -63,7 +63,7 @@ export default function Home() {
 
   const fetchUserData = async (email) => {
     try {
-      const res = await axios.get(`/api/users/${encodeURIComponent(email)}`);
+      const res = await axios.get(`https://tinytrims.vercel.app/api/users/${encodeURIComponent(email)}`);
       if (res.data.user !== null) {
         setUserData(res.data.user);
       } else {
