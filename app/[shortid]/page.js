@@ -3,7 +3,7 @@ import axios from 'axios';
 
 async function getLinkData({ shortid }) {
   try {
-    const response = await axios.get(`/api/links/${encodeURIComponent(shortid)}`);
+    const response = await axios.get(`https://tinytrims.vercel.app/api/links/${encodeURIComponent(shortid)}`);
     return response.data;
   } catch (error) {
     console.error(error);
