@@ -39,6 +39,7 @@ const initialMetaDataState = {
   opengraphImageLink: '',
 };
 
+
 export default function Home() {
   const { toast } = useToast();
   const { theme } = useTheme()
