@@ -7,7 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
-
+import { ReloadIcon } from "@radix-ui/react-icons";
 import { Separator } from "@/components/ui/separator"
 import {
   Accordion,
@@ -46,8 +46,8 @@ export default function Home() {
   const [parent] = useAutoAnimate(/* optional config */)
   const [toggleAdvancedSettings,setToggleAdvancedSettings] = useState(false);
   const { data : session } = useSession();
+  const [isTinyLinkLoading, setIsTinyLinkLoading] = useState(false);
   const [destinationLinkInput , setDestinationLinkInput] = useState('');
-  // const [selectedLinkIds, setSelectedLinkIds] = useState([]);
   const [metaDataState, setMetaDataState] = useState(initialMetaDataState);
   const [activeButtonIndex, setActiveButtonIndex] = useState(null);
   const handleConfigureLink = (index) => {
@@ -82,14 +82,15 @@ export default function Home() {
         })
       } else {
         if(session && session.user){
+          setIsTinyLinkLoading(true);
           await handleStoreUserData({session ,destinationLinkInput,metaDataState });
               toast({
                 title: `Generated a shortId for ${destinationLinkInput}`,
               });
           await delay(1000);
           await fetchUserData(session.user.email);
+          setIsTinyLinkLoading(false);
           setDestinationLinkInput('')
-          
         } else {
           toast({
             title: "SignIn to continue",
@@ -196,7 +197,18 @@ export default function Home() {
               metaDataState={metaDataState}
               handleMetaDataChange={handleMetaDataChange}
             />  
-                <Button onClick={handleFormSubmit}>Shorten</Button>
+                <Button onClick={handleFormSubmit} disabled={isTinyLinkLoading}>
+                {isTinyLinkLoading ? 
+                <>
+                <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                &nbsp;
+                <p className="animate-pulse">Trimming</p>
+                </>
+                :
+                "Shorten"
+              }
+                
+                </Button>
       </div>
       <div className="flex flex-col text-xs">
         <h3>Max url limit: 5</h3>

@@ -32,7 +32,8 @@ import { useTheme } from "next-themes"
 import axios from 'axios';
 import { useToast } from "@/components/ui/use-toast"
 import { useAutoAnimate } from '@formkit/auto-animate/react'
-
+import NextLink from "next/link";
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 
 export function CollapsibleDemo({ domain, active, onConfigureLink ,deleteLinkFunction}) {
@@ -44,7 +45,6 @@ export function CollapsibleDemo({ domain, active, onConfigureLink ,deleteLinkFun
   const { theme, setTheme } = useTheme()
   const linksArray = [...domain.links];
   const firstLink = linksArray.shift();
-  const handleVisitLink = (link) => router.push(`/${encodeURIComponent(link)}`);
   const handleConfigureLink = () => {
     setIsOpen(true);
     onConfigureLink(); // Notify the parent component
@@ -153,10 +153,26 @@ export function CollapsibleDemo({ domain, active, onConfigureLink ,deleteLinkFun
             </Tooltip>
           </TooltipProvider>
                         
-         {firstLink && <Button variant="ghost" size="xs" onClick={() => handleVisitLink(firstLink.id)} className="p-1.5">
-          {/* <TrashIcon className="h-4 w-4 text-red-500" /> */}
+         {firstLink && <>
+            <CopyToClipboard 
+              text={`https://tinytrims.vercel.app/${firstLink?.id}`} 
+              onCopy={()=>{
+                  toast({
+                  title: `${firstLink?.id} copied with link successfully`,
+                })
+              }}
+              className="opacity-50 hover:opacity-100 transition-opacity duration-300"
+              >
+                  <Button variant="ghost" size="xs">
+                    <CopyIcon /> 
+                  </Button>
+            </CopyToClipboard>
+          
+          <Button variant="ghost" size="xs" className="p-1.5" asChild>
+          <NextLink href={`/${firstLink.id}`}>
             <ArrowTopRightIcon className="h-4 w-4" />
-        </Button> }
+          </NextLink>
+        </Button> </> }
         </div>
         </div>
       
@@ -206,11 +222,27 @@ export function CollapsibleDemo({ domain, active, onConfigureLink ,deleteLinkFun
             </Tooltip>
           </TooltipProvider> */}
                         
-          {link && <Button variant="ghost" size="xs" onClick={() => handleVisitLink(link.id)} className=" p-1.5">
+          {link && <>
+          <CopyToClipboard 
+            text={`https://tinytrims.vercel.app/${link?.id}`} 
+            onCopy={()=> {
+              toast({
+              title: `${link?.id} copied with link successfully`,
+                })
+               }}
+            className="opacity-50 hover:opacity-100 transition-opacity duration-300"
+            >
+            <Button variant="ghost" size="xs">
+              <CopyIcon /> 
+            </Button>
+          </CopyToClipboard>
+
+          <Button variant="ghost" size="xs" className="p-1.5" asChild>
           {/* <TrashIcon className="h-4 w-4 text-red-500" /> */}
-            {/* <CopyIcon className="h-4 w-4" /> */}
+          <NextLink href={`/${link.id}`}>
             <ArrowTopRightIcon className="h-4 w-4" />
-        </Button> }
+          </NextLink>
+        </Button> </>}
         </div>
         </div>
          ))}
