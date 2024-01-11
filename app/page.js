@@ -135,7 +135,7 @@ export default function Home() {
   const postData = async(linkIds) => {
     const options = {
       method: 'POST',
-      url: `http://localhost:3000/api/remove/${encodeURIComponent(userData?.tag)}`,
+      url: `/api/remove/${encodeURIComponent(userData?.tag)}`,
       data: { linkIds }
     }; 
     try {
