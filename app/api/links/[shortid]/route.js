@@ -10,7 +10,7 @@ export const GET = async (request, { params }) => {
   await connectMongoDb();
 
   // Check if linkid is in params
-  if (!shortid) {
+  if (!shortid && !shortid.length === 6) {
     return NextResponse.json({ error: "Link ID not provided" }, { status: 400 });
   }
 
@@ -38,7 +38,6 @@ export const GET = async (request, { params }) => {
             ],
           }
           );
-          console.log(result)
           
           if (result?.modifiedCount > 0) {
             return NextResponse.json({ links }, { status: 200 });
@@ -49,11 +48,11 @@ export const GET = async (request, { params }) => {
           return NextResponse.json({ message: "Link not found" }, { status: 404 });
         }
       } catch (error) {
-        return NextResponse.json({ message: "Error updating views", error }, { status: 500 });
+        return NextResponse.json({ message: "Error updating views", error }, { status: 404 });
       }
     } 
   } catch (error) {
     console.error('Error retrieving data:', error);
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 404 });
   }
 };

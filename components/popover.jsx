@@ -19,7 +19,7 @@ export function PopoverDemo({
         <Button variant="outline" className="px-[.75em]"><GearIcon className="h-4 w-4" /></Button>
       </PopoverTrigger>
       <PopoverContent className="w-80">
-        <div className="flex flex-col justify-start w-full gap-3">
+        <div className="flex flex-col justify-start w-full gap-2">
           <div className="flex flex-col gap-2">
             <Label htmlFor="meta-title">Meta data: Title</Label>
               <Input 

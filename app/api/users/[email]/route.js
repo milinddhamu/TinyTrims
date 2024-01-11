@@ -8,7 +8,6 @@ export const PUT = auth(async(request, { params }) => {
   if(!request.auth){
     return NextResponse.json({error: "Please SignIn to continue"}, { status: 400 });
   };
-
   const { email } = params;
   const requestData = await request.json();
 
@@ -18,15 +17,20 @@ export const PUT = auth(async(request, { params }) => {
     const existingUser = await UserModel.findOne({ email });
 
     if (existingUser) {
+      if(existingUser && existingUser.domains.length >= 5){
+        return NextResponse.json({ error: "Domain has reached the maximum number of domains (5)" }, { status: 400 });
+
+      }
       let updatedUser;
 
       if (requestData.domainId && requestData.link) {
         // Check if the domain exists and has at least 5 links
         const existingDomain = existingUser.domains.find(domain => domain._id.toString() === requestData.domainId);
 
-        if (existingDomain && existingDomain.links.length >= 5) {
+        if (existingDomain && existingDomain.links.length >= 5 ) {
           return NextResponse.json({ error: "Domain has reached the maximum number of links (5)" }, { status: 400 });
         }
+        
 
         // Update links in an existing domain
         updatedUser = await UserModel.findOneAndUpdate(
