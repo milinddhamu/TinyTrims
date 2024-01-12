@@ -10,25 +10,24 @@ export const PUT = auth(async(request, { params }) => {
   };
   const { email } = params;
   const requestData = await request.json();
-
   await connectMongoDb();
 
   try {
     const existingUser = await UserModel.findOne({ email });
 
     if (existingUser) {
-      if(existingUser && existingUser.domains.length >= 5){
-        return NextResponse.json({ error: "Domain has reached the maximum number of domains (5)" }, { status: 400 });
-
-      }
       let updatedUser;
 
       if (requestData.domainId && requestData.link) {
         // Check if the domain exists and has at least 5 links
-        const existingDomain = existingUser.domains.find(domain => domain._id.toString() === requestData.domainId);
+        const existingDomain = existingUser.domains.find(domain => domain.destination === requestData.link.destination);
 
+        if (!existingDomain && existingUser.domains.length >= 5 ) {
+          return NextResponse.json({ error: "Domain has reached the maximum number of domains reached (5)" }, { status: 400 });
+        }
+        
         if (existingDomain && existingDomain.links.length >= 5 ) {
-          return NextResponse.json({ error: "Domain has reached the maximum number of links (5)" }, { status: 400 });
+          return NextResponse.json({ error: "Domain has reached the maximum number of links reached (5)" }, { status: 400 });
         }
         
 

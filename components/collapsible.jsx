@@ -34,7 +34,7 @@ import { useToast } from "@/components/ui/use-toast"
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import NextLink from "next/link";
 import {CopyToClipboard} from 'react-copy-to-clipboard';
-
+import { motion, animate,useMotionValue, useMotionTemplate } from "framer-motion";
 
 export function CollapsibleDemo({ domain, active, onConfigureLink ,deleteLinkFunction}) {
   const router = useRouter();
@@ -82,19 +82,43 @@ export function CollapsibleDemo({ domain, active, onConfigureLink ,deleteLinkFun
         title: `Please select tiny link id to continue`,
       });
     }
-  }
+  };
+  let mouseX = useMotionValue(0);
+  let mouseY = useMotionValue(0);
+
+  const handleMouseMove = ({clientX,clientY,currentTarget}) => {
+    let { left,top } = currentTarget.getBoundingClientRect();
+    mouseX.set(clientX - left);
+    mouseY.set(clientY - top);
+  };
+  const shadowColor = theme === "dark" ? "rgb(255 255 255/0.15)" : "rgb(0 0 0/0.15)";
   return (
-    <Card className={`w-full p-2 rounded-[.5em]`}>
+    <Card className={`w-full p-2 rounded-[.5em] relative group bg-transparent`} onMouseMove={handleMouseMove}>
+       <motion.div
+          className="pointer-events-none absolute opacity-10 group-hover:opacity-50 transition-all ease-in duration-300" 
+          style={{ 
+            background: useMotionTemplate`radial-gradient(450px circle at ${mouseX}px ${mouseY}px, ${shadowColor},transparent 80%)` , 
+            borderRadius:"8px",inset:"-1px",zIndex:"-10"
+          }}/>
+       
     <Collapsible
       open={isOpen}
       onOpenChange={setIsOpen}
       className="w-full space-y-2"
     >
       <div className="flex items-center justify-between space-x-4 pl-2">
-
-        <h4 className="text-sm font-semibold">
-          {domain.destination}
-        </h4>
+      <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger className="truncate-text ">
+                <p className="text-sm font-semibold">
+                  {domain.destination}
+                </p>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{domain.destination}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         <div className="flex flex-row items-center gap-2">
         {(active && selectedLinkIds) && <Button 
           variant={selectedLinkIds?.length > 0 ? "destructive" : "outline"} 

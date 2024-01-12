@@ -47,17 +47,17 @@ export default async function Page({ params }) {
     const res = await getLinkData({ shortid });
     const matchedLinkData = res?.links.find(entry => entry !== null) ;
     const fetchedMetaData = {
-      title: matchedLinkData?.title,
-      description: matchedLinkData?.description,
+      title: matchedLinkData.title,
+      description: matchedLinkData.description,
       openGraph: {
-        title: matchedLinkData?.title,
-        description: matchedLinkData?.description,
-        images: [matchedLinkData?.image],
+        title: matchedLinkData.title,
+        description: matchedLinkData.description,
+        images: [matchedLinkData.image],
       },
       twitter: {
-        title: matchedLinkData?.title,
-        description: matchedLinkData?.description,
-        images: [matchedLinkData?.image], // Must be an absolute URL
+        title: matchedLinkData.title,
+        description: matchedLinkData.description,
+        images: [matchedLinkData.image], // Must be an absolute URL
       },
     }
     metadata.title = fetchedMetaData?.title

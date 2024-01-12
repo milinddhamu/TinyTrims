@@ -28,6 +28,7 @@
     "axios": "^1.6.5",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "framer-motion": "^10.18.0",
     "mongoose": "^8.0.3",
     "nanoid": "^5.0.4",
     "next": "14.0.4",

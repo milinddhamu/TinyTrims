@@ -23,7 +23,9 @@ export default function RootLayout({ children , session }) {
             defaultTheme="system"
             enableSystem
           >
-          <main>{children}</main>
+          <main>
+            {children}
+            </main>
           <Toaster />
           </ThemeProvider>
       </SessionProvider>
