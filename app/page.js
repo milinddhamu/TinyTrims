@@ -32,13 +32,16 @@ import handleStoreUserData from '@/controllers/user';
 import { useToast } from "@/components/ui/use-toast"
 import axios from 'axios';
 import { useAutoAnimate } from '@formkit/auto-animate/react'
-import { useTheme } from 'next-themes'
+import { useTheme } from 'next-themes';
+import { Suspense } from 'react';
+import Loading from '@/components/loading'
+import dynamic from 'next/dynamic';
+
 const initialMetaDataState = {
   title: '',
   description: '',
   opengraphImageLink: '',
 };
-
 
 export default function Home() {
   const { toast } = useToast();
@@ -54,6 +57,7 @@ export default function Home() {
     setActiveButtonIndex((prevIndex) => (prevIndex === index ? null : index));
   };
   const [userData , setUserData] = useState(null);
+  console.log(userData)
   const domainRegex = /^(?!:\/\/)([a-zA-Z0-9-]{1,63}\.?){1,}([a-zA-Z]{2,})$/;
   const handleDestinationLinkInput = (e) => {
     const inputValue = e.target.value;
@@ -63,7 +67,7 @@ export default function Home() {
 
   const fetchUserData = async (email) => {
     try {
-      const res = await axios.get(`https://tinytrims.vercel.app/api/users/${encodeURIComponent(email)}`);
+      const res = await axios.get(`/api/users/${encodeURIComponent(email)}`);
       if (res.data.user !== null) {
         setUserData(res.data.user);
       } else {
@@ -78,32 +82,59 @@ export default function Home() {
     if (destinationLinkInput !== "") {
       if (domainRegex.test(destinationLinkInput)) {
         toast({
-          title: "Please provide valid link.",
-        })
+          title: "Please provide a valid link.",
+        });
       } else {
-        if(session && session.user){
+        if (session && session.user) {
           setIsTinyLinkLoading(true);
-          await handleStoreUserData({session ,destinationLinkInput,metaDataState });
+  
+          // Check if the destinationLinkInput is a new domain and if length of domains >= 5
+          const userDomains = userData?.domains || [];
+          const isNewDomain = userDomains.some(domain => domain.destination === destinationLinkInput);
+          const hasMaxDomains = userDomains.length >= 5;
+  
+          if (!isNewDomain && hasMaxDomains) {
+            toast({
+              title: "Limit reached!",
+              description: "Maximum number of domains (5) reached.",
+            });
+          } else {
+            // Check if destinationLinkInput is already present and has 5 links
+            const existingDomain = userDomains?.find(domain => domain.destination === destinationLinkInput);
+            const hasMaxLinks = existingDomain && existingDomain?.links.length >= 5;
+  
+            if (hasMaxLinks) {
               toast({
-                title: `Generated a shortId for ${destinationLinkInput}`,
+                title:"Limit reached!",
+                description: `Maximum number of links (5) reached for ${destinationLinkInput}.`,
               });
-          await delay(1000);
-          await fetchUserData(session.user.email);
+            } else {
+              await handleStoreUserData({ session, destinationLinkInput, metaDataState });
+              toast({
+                title: `Generated TinyId `,
+                description:`for ${destinationLinkInput}`
+              });
+              await delay(1000);
+              await fetchUserData(session.user.email);
+            }
+          }
+  
           setIsTinyLinkLoading(false);
-          setDestinationLinkInput('')
+          setDestinationLinkInput('');
         } else {
           toast({
-            title: "SignIn to continue",
-            description : "you can sign-in with google"
-          })
+            title: "Sign in to continue",
+            description: "You can sign in with Google.",
+          });
         }
       }
     } else {
       toast({
         title: "Please enter your link.",
-      })
+      });
     }
   };
+  
   useEffect(() => {
     const fetchData = async () => {
       if (session && session.user && userData === null) {
@@ -154,7 +185,8 @@ export default function Home() {
     }
   }
   return (
-    <div className="flex flex-col h-full justify-start w-full items-center p-4">
+    <>
+    <div className="flex flex-col min-h-screen h-screen justify-start w-full items-center p-4">
       <div className="flex w-full justify-center items-center h-48 ">
         <h1 className={`font-bold text-4xl text-transparent bg-clip-text bg-[radial-gradient(_var(--tw-gradient-stops))] from-white to-black animate-text tracking-tighter m-1`}>tiny trims</h1>
       </div>
@@ -215,23 +247,24 @@ export default function Home() {
         <h3>Max link limit (per url): 5</h3>
       </div>
       <Separator className="my-1" />
-      {userData && 
-        <div ref={parent} className="flex flex-col w-full gap-3">
-            {reverseMappedLinks?.length > 0 ?  reverseMappedLinks.map((domain,index)=>(
-              <CollapsibleDemo 
-              domain={domain} 
-              key={`${domain.destination}-${index}`} 
-              active={activeButtonIndex === index}
-              onConfigureLink={() => handleConfigureLink(index)}
-              deleteLinkFunction={postData}
-              // selectedLinkIds={selectedLinkIds} 
-              // onCheckboxChange={onCheckboxChange}
-            />
-            )) : <h1 className="w-full text-center">Not even one link is made tiny.</h1>}
+        <div className="flex flex-col w-full gap-3 mb-32">
+              {(session && session.user) && (reverseMappedLinks?.length > 0 ?
+                reverseMappedLinks.map((domain,index)=>(
+                <CollapsibleDemo 
+                domain={domain} 
+                key={`${domain.destination}-${index}`} 
+                active={activeButtonIndex === index}
+                onConfigureLink={() => handleConfigureLink(index)}
+                deleteLinkFunction={postData}
+              />
+              )) : <Loading />)
+            }            
+            {(reverseMappedLinks?.length === 0 && userData?.tag && session) && <h1 className="w-full text-center">Not even one link is made tiny.</h1>}
         </div>
-      }
       {!(session && session.user) && <span className="flex flex-col gap-2 w-full"><h1 className=" text-center">Please sign in to continue.</h1><h1 className="w-full text-center text-sm">currently Google provider is only supported. </h1></span>}
     </div>
     </div>
+    <div className="flex w-full h-32 bg-gradient-to-t from-gray-700/20 to-gray-200/0 bottom-0 sticky -z-10"></div>
+    </>
   )
 }

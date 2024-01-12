@@ -41,6 +41,7 @@ export function PopoverDemo({
                 name="description"
                 id="meta-description" 
                 placeholder="Meta Description"
+                rows="4"
               />
           </div>
 

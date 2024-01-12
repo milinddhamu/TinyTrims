@@ -85,3 +85,9 @@
     background-position: right center;
   }
 }
+
+.truncate-text {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
