@@ -265,7 +265,6 @@ export default function Home() {
       {!(session && session.user) && <span className="flex flex-col gap-2 w-full"><h1 className=" text-center">Please sign in to continue.</h1><h1 className="w-full text-center text-sm">currently Google provider is only supported. </h1></span>}
     </div>
     </div>
-    <div className="flex w-full h-32 bg-gradient-to-t from-gray-700/20 to-gray-200/0 bottom-0 sticky -z-10"></div>
     </>
   )
 }
