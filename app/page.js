@@ -36,6 +36,7 @@ import { useTheme } from 'next-themes';
 import { Suspense } from 'react';
 import Loading from '@/components/loading'
 import dynamic from 'next/dynamic';
+import { Skeleton } from "@/components/ui/skeleton";
 
 const initialMetaDataState = {
   title: '',
@@ -198,8 +199,8 @@ export default function Home() {
           <DropdownMenu>
             <DropdownMenuTrigger>
               <Avatar>
-                <AvatarImage src={session.user.image} alt="user" />
-                <AvatarFallback>CN</AvatarFallback>
+                <AvatarImage src={session?.user.image} alt="user" />
+                <AvatarFallback><Skeleton className="h-full w-full duration-350" /></AvatarFallback>
                 </Avatar>
             </DropdownMenuTrigger>
 
