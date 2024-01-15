@@ -58,7 +58,6 @@ export default function Home() {
     setActiveButtonIndex((prevIndex) => (prevIndex === index ? null : index));
   };
   const [userData , setUserData] = useState(null);
-  console.log(userData)
   const domainRegex = /^(?!:\/\/)([a-zA-Z0-9-]{1,63}\.?){1,}([a-zA-Z]{2,})$/;
   const handleDestinationLinkInput = (e) => {
     const inputValue = e.target.value;
