@@ -4,8 +4,7 @@ import Head from 'next/head';
 
 async function getLinkDataByShortid(shortid) {
   try {
-    const response = await axios.get(`http://localhost:3000/api/links/${encodeURIComponent(shortid)}`);
-    console.log(response.data)
+    const response = await axios.get(`https://tinytrims.vercel.app/api/links/${encodeURIComponent(shortid)}`);
     return response.data;
   } catch (error) {
     return notFound();
