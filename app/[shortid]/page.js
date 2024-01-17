@@ -16,24 +16,24 @@ async function getLinkData(params) {
   return await getLinkDataByShortid(shortid);
 }
 
-export async function generateMetadata({ params }) {
-  const data = await getLinkData(params);
-  const matchedData = data?.links.find(entry => entry !== null);
-  return {
-    title: matchedData.title,
-    description: matchedData.description,
-    openGraph: {
-      title: matchedData.title,
-      description: matchedData.description,
-      images: [matchedData.image],
-    },
-    twitter: {
-      title: matchedData.title,
-      description: matchedData.description,
-      images: [matchedData.image], // Must be an absolute URL
-    },
-  };
-};
+// export async function generateMetadata({ params }) {
+//   const data = await getLinkData(params);
+//   const matchedData = data?.links.find(entry => entry !== null);
+//   return {
+//     title: matchedData.title,
+//     description: matchedData.description,
+//     openGraph: {
+//       title: matchedData.title,
+//       description: matchedData.description,
+//       images: [matchedData.image],
+//     },
+//     twitter: {
+//       title: matchedData.title,
+//       description: matchedData.description,
+//       images: [matchedData.image], // Must be an absolute URL
+//     },
+//   };
+// };
 
 
 // export const metadata = {
