@@ -224,7 +224,7 @@ export default function Home() {
                 <p className="animate-pulse">Trimming</p>
                 </>
                 :
-                "Shorten"
+                "Trim"
               }
                 
                 </Button>
