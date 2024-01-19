@@ -66,7 +66,7 @@ export default function Home() {
 
   const handleFormSubmit = async () => {
     if (destinationLinkInput !== "") {
-      if (domainRegex.test(destinationLinkInput)) {
+      if (!domainRegex.test(destinationLinkInput)) {
         toast({
           title: "Please provide a valid link.",
         });
