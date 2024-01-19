@@ -1,20 +1,11 @@
 "use client"
 import { ModeToggle } from '@/components/ModeToggle'
 import { CollapsibleDemo } from '@/components/collapsible'
-import { ToggleOutline } from '@/components/SettingsToggle'
-import { CardWithForm } from '@/components/ui/CardWithForm'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import Image from 'next/image'
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { Separator } from "@/components/ui/separator"
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
 import {useState, useEffect} from "react";
 import { signIn, signOut } from "next-auth/react"
 import {useSession} from "next-auth/react";
@@ -27,15 +18,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { PopoverDemo } from '@/components/popover'
-import {nanoid} from 'nanoid';
 import handleStoreUserData from '@/controllers/user';
 import { useToast } from "@/components/ui/use-toast"
 import axios from 'axios';
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { useTheme } from 'next-themes';
-import { Suspense } from 'react';
 import Loading from '@/components/loading'
-import dynamic from 'next/dynamic';
 import { Skeleton } from "@/components/ui/skeleton";
 
 const initialMetaDataState = {
