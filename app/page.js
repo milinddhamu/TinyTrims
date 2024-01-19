@@ -261,7 +261,7 @@ export default function Home() {
             }            
             {(reverseMappedLinks?.length === 0 && userData?.tag && session) && <h1 className="w-full text-center">Not even one link is made tiny.</h1>}
         </div>
-      {!(session && session.user) && <span className="flex flex-col gap-2 w-full"><h1 className=" text-center">Please sign in to continue.</h1><h1 className="w-full text-center text-sm">currently Google provider is only supported. </h1></span>}
+      {!(session && session.user) && <span className="flex flex-col gap-2 w-full"><h1 className="font-semibold text-center">Please sign in to continue.</h1><h1 className="w-full text-center text-sm">Currently sign-in with Google is only supported. </h1></span>}
     </div>
     </div>
     </>
