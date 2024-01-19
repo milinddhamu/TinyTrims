@@ -33,19 +33,17 @@ const initialMetaDataState = {
 };
 
 export default function Home() {
-  const { toast } = useToast();
-  const { theme } = useTheme()
-  const [parent] = useAutoAnimate(/* optional config */)
-  const [toggleAdvancedSettings,setToggleAdvancedSettings] = useState(false);
-  const { data : session } = useSession();
-  const [isTinyLinkLoading, setIsTinyLinkLoading] = useState(false);
-  const [destinationLinkInput , setDestinationLinkInput] = useState('');
-  const [metaDataState, setMetaDataState] = useState(initialMetaDataState);
-  const [activeButtonIndex, setActiveButtonIndex] = useState(null);
+  const { toast } = useToast(); // notification toaster
+  const [parent] = useAutoAnimate(/* optional config */) // auto animation function using ref
+  const { data : session } = useSession(); // user session data from next-auth
+  const [isTinyLinkLoading, setIsTinyLinkLoading] = useState(false); // loading when pressed button to trim
+  const [destinationLinkInput , setDestinationLinkInput] = useState(''); // long url input
+  const [metaDataState, setMetaDataState] = useState(initialMetaDataState); // metedata form state
+  const [activeButtonIndex, setActiveButtonIndex] = useState(null); // edit link state indexing so only one stays editable
   const handleConfigureLink = (index) => {
     setActiveButtonIndex((prevIndex) => (prevIndex === index ? null : index));
-  };
-  const [userData , setUserData] = useState(null);
+  }; // function to activate and de activate edit option of a index link so only when gets editable mode
+  const [userData , setUserData] = useState(null); // data fetched from mongoDB
   const domainRegex = /^(https?|ftp):\/\/[^\s\/$.?#].[^\s]*$/;
   const handleDestinationLinkInput = (e) => {
     const inputValue = e.target.value;
