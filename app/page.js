@@ -58,7 +58,7 @@ export default function Home() {
     setActiveButtonIndex((prevIndex) => (prevIndex === index ? null : index));
   };
   const [userData , setUserData] = useState(null);
-  const domainRegex = /^(?!:\/\/)([a-zA-Z0-9-]{1,63}\.?){1,}([a-zA-Z]{2,})$/;
+  const domainRegex = /^(https?|ftp):\/\/[^\s\/$.?#].[^\s]*$/;
   const handleDestinationLinkInput = (e) => {
     const inputValue = e.target.value;
     setDestinationLinkInput(inputValue);
@@ -221,7 +221,7 @@ export default function Home() {
         <div className="w-full">
           <Input 
           placeholder="https://example.com" 
-          className={domainRegex.test(destinationLinkInput) ? "text-red-400" : "text-green-400"} 
+          className={domainRegex.test(destinationLinkInput) ? "text-green-400" : "text-red-400"} 
           value={destinationLinkInput} 
           onChange={handleDestinationLinkInput} />
         </div>
