@@ -188,7 +188,7 @@ export default function Home() {
     <>
     <div className="flex flex-col min-h-screen h-screen justify-start w-full items-center p-4">
       <div className="flex w-full justify-center items-center h-48 min-h-48">
-        <h1 className={`font-bold text-4xl text-transparent bg-clip-text bg-[radial-gradient(_var(--tw-gradient-stops))] from-white to-black animate-text tracking-tighter m-1`}>tiny trims</h1>
+        <h1 className={`font-bold text-4xl text-transparent bg-clip-text bg-[radial-gradient(_var(--tw-gradient-stops))] from-white to-black animate-text tracking-tighter m-1`}>Tiny Trims</h1>
       </div>
     <div className="flex flex-col gap-2 items-start w-full max-w-xl">
       <div className="flex flex-row gap-2 items-center w-full">
