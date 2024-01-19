@@ -49,7 +49,7 @@ export default function Home() {
     const inputValue = e.target.value;
     setDestinationLinkInput(inputValue);
   };
-  const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+  const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms)); // adding delay according to param
 
   const fetchUserData = async (email) => {
     try {
@@ -169,7 +169,7 @@ export default function Home() {
       console.error('Error:', error);
       throw error; // Rethrow the error to handle it in the calling function
     }
-  }
+  }; // function to push data to database inside user object
   return (
     <>
     <div className="flex flex-col min-h-screen h-screen justify-start w-full items-center p-4">
@@ -178,6 +178,7 @@ export default function Home() {
       </div>
     <div className="flex flex-col gap-2 items-start w-full max-w-xl">
       <div className="flex flex-row gap-2 items-center w-full">
+        {/* Theme toggle switch */}
       <ModeToggle />
       {(session && session.user) ? 
       <>
