@@ -65,29 +65,7 @@ export default async function Page({ params }) {
     // metadata.twitter.description = matchedLinkData.description
     // metadata.twitter.images = [matchedLinkData.image]
     if (destination) {
-      return(
-        <>
-        <Head>
-          {/* Title */}
-          <title>{matchedLinkData.title}</title>
-
-          {/* Description */}
-          <meta name="description" content={matchedLinkData.description} />
-
-          {/* OpenGraph */}
-          <meta property="og:title" content={matchedLinkData.title} />
-          <meta property="og:description" content={matchedLinkData.description} />
-          <meta property="og:image" content={matchedLinkData.image} />
-
-          {/* Twitter */}
-          <meta name="twitter:title" content={matchedLinkData.title} />
-          <meta name="twitter:description" content={matchedLinkData.description} />
-          <meta name="twitter:image" content={matchedLinkData.image} />
-        </Head>
-        {redirect(destination)}
-        </>
-      )
-      // return redirect(destination)
+      return redirect(destination)
     } else {
       return notFound();
     }
