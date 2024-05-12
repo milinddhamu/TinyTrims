@@ -66,4 +66,4 @@ Feel free to contribute to the project by opening issues or creating pull reques
 
 This project is licensed under the [MIT License](LICENSE).
 
-Happy URL shortening with **LinkSwift**! 🚀
+Happy URL shortening with **Tiny Trims**! 🚀
